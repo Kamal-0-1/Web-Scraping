@@ -1,0 +1,193 @@
+
+body{
+    margin-top:0;
+}
+
+nav{
+    display: flex;
+    justify-content:start;
+    align-items: center;
+    margin-left:-8px;
+    width: 100vw;
+    background: rgb(47,41,41);
+    background: linear-gradient(54deg, rgba(47,41,41,1) 5%, rgba(47,67,151,0.9725140056022409) 67%, rgba(0,185,255,0.8016456582633054) 92%);
+    overflow: hidden;
+    height: 5em;
+    position: fixed;
+    
+}
+
+.nav-items{
+    text-decoration: none;
+    text-align: center;
+    color:white;
+    font-size: medium;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    height: 5rem;
+    width: 100%;
+    overflow: hidden;
+    margin-left: 2px;
+    border-radius: 5px;
+    background-color: #4b4453;
+}
+
+.nav-items:hover{
+    color: black;
+    background-color: bisque;
+    cursor: pointer;
+}
+
+.search-form{
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items:center
+}
+
+.search-form input{
+    min-width: 30%;
+    max-width: 50%;
+    height: 40%;
+    border-radius: 6px;
+}
+
+.search-button{
+    font-size: medium;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    border-radius: 5px;
+    margin: 2px;
+    color:white;
+    background-color:  #4b4453;
+}
+
+.search-button:hover{
+    background-color: bisque;
+    color: black;
+    cursor:pointer
+}
+
+.Container {
+    padding-top: 100px;
+    display: grid;
+    column-gap: 10px;
+    row-gap: 10px;
+    grid-template-columns: repeat(4,1fr);
+}
+
+.items{
+    display: flex;
+    min-width: 23vw;
+    max-width: 24vw;
+    min-height: 350px;
+    max-height: 400px;
+    overflow: hidden;
+    border-radius: 6%;
+    justify-content: center;
+    text-align: center;
+    background-image: linear-gradient(
+        120deg,
+        hsl(240deg 18% 75%) 0%,
+        hsl(220deg 24% 75%) 12%,
+        hsl(209deg 26% 74%) 24%,
+        hsl(200deg 24% 73%) 36%,
+        hsl(192deg 21% 72%) 48%,
+        hsl(182deg 16% 72%) 59%,
+        hsl(169deg 14% 73%) 70%,
+        hsl(152deg 11% 75%) 80%,
+        hsl(126deg 7% 76%) 90%,
+        hsl(90deg 7% 76%) 100%
+      );
+}
+
+.items:hover{
+    border: 2px solid black;
+    background-image: linear-gradient(
+    120deg,
+    hsl(0deg 0% 100%) 0%,
+    hsl(300deg 100% 100%) 12%,
+    hsl(300deg 100% 100%) 24%,
+    hsl(300deg 100% 100%) 36%,
+    hsl(300deg 100% 100%) 48%,
+    hsl(300deg 100% 100%) 59%,
+    hsl(300deg 100% 100%) 70%,
+    hsl(300deg 100% 100%) 80%,
+    hsl(300deg 100% 100%) 90%,
+    hsl(0deg 0% 100%) 100%
+    );
+}
+
+.items img{
+    margin-top: 8px;
+    min-width: 80%;
+    max-width: 90%;
+    min-height: 40%;
+    max-height: 50%;
+    object-fit:contain;
+}
+
+.items a{
+    text-decoration: none;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.items h3{
+    white-space: nowrap; /* Prevents text from wrapping to the next line */
+    overflow: hidden;   
+    text-overflow: ellipsis;
+    margin-left: 3px;
+    width: 98%;
+    color: black;
+    font-size: medium;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.items p{
+    justify-self: center;
+    align-self: center;
+    color: black;
+    margin:8px;
+}
+
+.items button{
+    border: none;
+    border-radius: 1em;
+}
+
+.items button:hover{
+    background-color: rgb(94, 218, 137);
+}
+
+.Footer{
+    display: flex;
+    justify-content: center;
+}
+
+.Footer>form{
+    margin:10px;
+}
+
+.Footer button{
+    font-size: medium;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    border-radius: 5px;
+    margin: 2px;
+    color:white;
+    background-color:  #4b4453;
+}
+
+.Footer button:hover{
+    background-color: bisque;
+    color: black;
+    cursor:pointer
+}
+

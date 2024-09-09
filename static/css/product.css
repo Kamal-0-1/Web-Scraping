@@ -1,0 +1,119 @@
+
+body{
+    margin-top:0;
+}
+
+nav{
+    display: flex;
+    justify-content:start;
+    align-items: center;
+    margin-left:-8px;
+    width: 100vw;
+    background: rgb(47,41,41);
+    background: linear-gradient(54deg, rgba(47,41,41,1) 5%, rgba(47,67,151,0.9725140056022409) 67%, rgba(0,185,255,0.8016456582633054) 92%);
+    overflow: hidden;
+    height: 5em;
+    position: fixed;
+    
+}
+
+.nav-items{
+    text-decoration: none;
+    text-align: center;
+    color:white;
+    font-size: medium;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    height: 5rem;
+    width: 100%;
+    overflow: hidden;
+    margin-left: 2px;
+    border-radius: 5px;
+    background-color: #4b4453;
+}
+
+.nav-items:hover{
+    color: black;
+    background-color: bisque;
+    cursor: pointer;
+}
+
+.search-form{
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items:center
+}
+
+.search-form input{
+    min-width: 30%;
+    max-width: 50%;
+    height: 40%;
+    border-radius: 6px;
+}
+
+.search-button{
+    font-size: medium;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    border-radius: 5px;
+    margin: 2px;
+    color:white;
+    background-color:  #4b4453;
+}
+
+.search-button:hover{
+    background-color: bisque;
+    color: black;
+    cursor:pointer
+}
+
+
+.review-container{
+    display: flex;
+    padding-top: 100px;
+    flex-direction: column;
+    align-items: center;
+    width: 98vw;
+}
+
+h2{
+    width: 40%;
+    padding: 5px;
+    min-height: 20vh;
+    max-height: 25vh;
+    text-align: center;
+    overflow: auto;
+    font-family: "Roboto", sans-serif;
+    color: black;
+    border-radius: 8px;
+    background-color: cadetblue;
+}
+
+h2:hover{
+    background-color: rgb(190, 131, 55);
+    box-shadow: -10px 10px 5px 5px rgba(0, 0, 0, 0.252);
+}
+
+h2>p{
+    font-size: medium;
+    font-family: "Roboto", sans-serif;
+    color: black;
+    font-weight: 500;
+    font-style: normal;
+    text-align: center;
+}
+
+.image-container{
+    display: flex;
+    width: 98vw;
+    padding-bottom: 10px;
+}
+
+.image-container img{
+    object-fit: contain;
+    width:50%;
+}

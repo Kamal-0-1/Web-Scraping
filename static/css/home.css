@@ -1,0 +1,87 @@
+
+body{
+    margin-top:0;
+    background-image: linear-gradient(
+        120deg,
+        hsl(240deg 18% 75%) 0%,
+        hsl(220deg 24% 75%) 12%,
+        hsl(209deg 26% 74%) 24%,
+        hsl(200deg 24% 73%) 36%,
+        hsl(192deg 21% 72%) 48%,
+        hsl(182deg 16% 72%) 59%,
+        hsl(169deg 14% 73%) 70%,
+        hsl(152deg 11% 75%) 80%,
+        hsl(126deg 7% 76%) 90%,
+        hsl(90deg 7% 76%) 100%
+      );
+}
+
+nav{
+    display: flex;
+    justify-content:start;
+    width: 100vw;
+    margin-left:-8px;
+    align-items: center;
+    background: rgb(47,41,41);
+    background: linear-gradient(54deg, rgba(47,41,41,1) 5%, rgba(47,67,151,0.9725140056022409) 67%, rgba(0,185,255,0.8016456582633054) 92%);
+    overflow: hidden;
+    height: 5em;
+    position: sticky;
+}
+
+.nav-items{
+    text-decoration: none;
+    text-align: center;
+    color:white;
+    font-size: medium;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    height: 5rem;
+    width: 5em;
+    margin-left: 2px;
+    border-radius: 5px;
+    background-color: #4b4453;
+}
+
+.nav-items:hover{
+    color: black;
+    background-color: blanchedalmond;
+    cursor: pointer;
+}
+
+.Words{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    text-align: center;
+    font-size: medium;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.search-bar{
+    border-radius: 5px;
+    width: 30vw;
+    height: 25px;
+}
+
+.search-button{
+    font-size: medium;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    border-radius: 5px;
+    margin: 2px;
+    color:white;
+    background-color:  #4b4453;
+}
+
+.search-button:hover{
+    background-color: bisque;
+    color: black;
+    cursor:pointer
+}

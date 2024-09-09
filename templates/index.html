@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEARCH</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!--Navigation-->
+    <nav class="nav">
+        <a href="/"><button class="nav-items">HOME</button></a>
+        <form action="/analyse" method="POST">
+            <button type="submit" class="nav-items">STATS</button>
+        </form>
+
+        <!--Search-->
+        <form action="/" method="POST" class="search-form">
+            <label for="search"></label>
+            <input type="text" id="search" name="product_name">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+        <a href="/download" title="download"><button class="nav-items download">DOWNLOAD</button></a>
+    </nav> 
+
+    <!-- card for prodcuts section -->
+    <section class="Products-cards">
+        <div class="Container">
+            {% for i in data %}
+            <div class="items">
+                <a href="{{i.ProductLink}}" target="_blank">
+                <img src="{{i.Image}}" alt="Product Image"/>
+                <h3 title="{{ i.Name }}">{{i.Name}}</h3>
+                <p>{{i.Brand}}</p>
+                <p>{{i.Price}}</p>
+                <p>{{i.Rating}}</p>
+                <p>{{i.FA}}</p>
+                {% if i.FA=="Flipkart" %}
+                <form action="/fproductanalyse" method="POST">
+                    <button name="ProductAnalyse" value="{{i.ID}}" type="submit">Analyse</button>
+                </form>
+                {% elif i.FA=="Amazon" %}
+                <form action="/aproductanalyse" method="POST">
+                    <button name="ProductAnalyse" value="{{i.ID}}" type="submit">Analyse</button>
+                </form>
+                {% endif %}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <footer>
+        <div class="Footer">
+            <form action="/{{page}}" method="POST">
+                <button type="submit" name="Page" value="{{s}}">Next</button>
+                <!-- <button class="previous">Previous</button> -->
+            </form>
+        </div>
+    </footer>
+</body>
+</html>
