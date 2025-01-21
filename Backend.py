@@ -44,7 +44,7 @@ def amazonSearch(x,p,Data):
             rating=div.find('span', attrs={'class':'a-icon-alt'})
                         # specification = containers.find('div', {'class':'_1rcHFq'})
             i=div.find('img',class_='s-image')
-            n=div.find('span',attrs={'class':'a-size-medium a-color-base a-text-normal'})
+            n=div.find('h2',attrs={'class':'a-size-medium a-spacing-none a-color-base a-text-normal'}).find('span')
             if(n==None):
                 b='Nill'
             else:
@@ -74,7 +74,7 @@ def amazonSearch(x,p,Data):
             rating=div.find('span', attrs={'class':'a-icon-alt'})
                             # specification = containers.find('div', {'class':'_1rcHFq'})
             i=div.find('img',class_='s-image')
-            n=div.find('span',attrs={'class':'a-size-base-plus a-color-base a-text-normal'})
+            n=div.find('h2',attrs={'class':'a-size-base-plus a-spacing-none a-color-base a-text-normal'}).find('span')
             l=div.find('a',class_='a-link-normal s-no-outline')
             if(n==None):
                 b='Nill'
