@@ -28,73 +28,48 @@ def Search(x,p):
 
 def amazonSearch(x,p,Data): 
     url = "https://www.amazon.in/s?k={0}&page={1}"
-    # url="https://www.amazon.in/s"
     url=url.format(x,p)
     page = requests.get(url, headers=Headers(os='win',browser='chrome',headers=True).generate())
     html = page.content
     page_soup = bs4.BeautifulSoup(html,"html.parser")
-    # Single grid
-    if(page_soup.find('div',class_='sg-col-20-of-24 s-result-item s-asin sg-col-0-of-12 sg-col-16-of-20 AdHolder sg-col s-widget-spacing-small sg-col-12-of-16')):
-        amazon=page_soup.findAll('div', attrs={'data-component-type': 's-search-result'})
-        # print(amazon)
-        for div in amazon:
-            d={}
-            # b=div.find('span', attrs={'class':'a-size-base-plus a-color-base'})
-            p=div.find('span', attrs={'class':'a-price-whole'})
-            rating=div.find('span', attrs={'class':'a-icon-alt'})
-                        # specification = containers.find('div', {'class':'_1rcHFq'})
-            i=div.find('img',class_='s-image')
-            n=div.find('h2',attrs={'class':'a-size-medium a-spacing-none a-color-base a-text-normal'}).find('span')
-            if(n==None):
-                b='Nill'
+
+    amazon = page_soup.findAll('div', attrs={'data-component-type': 's-search-result'})
+    for div in amazon:
+        d={}
+        p_elem = div.find('span', attrs={'class':'a-price-whole'})
+        rating = div.find('span', attrs={'class':'a-icon-alt'})
+        i = div.find('img', class_='s-image')
+        
+        n_h2 = div.find('h2')
+        n = n_h2.find('span') if n_h2 else None
+        
+        l = div.find('a', class_='a-link-normal s-no-outline') or div.find('a', class_='a-link-normal')
+                
+        if(n==None):
+            b='Nill'
+        else:
+            b=(n.text).split(' ')
+            
+        if(n!=None and p_elem!=None and b!=None and i!=None and l!=None):
+            d['Name']=n.text
+            d['Price']="₹"+p_elem.text
+            d['Brand']=b[0]
+            d['Image']=i.get('src')
+            
+            href = l.get('href', '')
+            if href.startswith('http'):
+                d['ProductLink'] = href
             else:
-                b=(n.text).split(' ')
-            l=div.find('a',class_='a-link-normal s-no-outline')
-            if(n!=None and p!=None and b!=None and i!=None and l!=None):
-                d['Name']=n.text
-                d['Price']="₹"+p.text
-                d['Brand']=b[0]
-                d['Image']=i.get('src')
-                # ratings.append(rating.text)
-                d['ProductLink']='https://amazon.in/'+l.get('href')
-                if(rating==None):
-                    d["Rating"]="NaN"
-                else:
-                    nr=(rating.text).split(" ")
-                    d["Rating"]=nr[0]
-                d['FA']="Amazon"
-                d['ID']=div['data-asin']
-                Data.append(d)
-    else:
-        amazon=page_soup.findAll('div', attrs={'data-component-type': 's-search-result'})
-        for div in amazon:
-            d={}
-            # b=div.find('span', attrs={'class':'a-size-base-plus a-color-base'})
-            p=div.find('span', attrs={'class':'a-price-whole'})
-            rating=div.find('span', attrs={'class':'a-icon-alt'})
-                            # specification = containers.find('div', {'class':'_1rcHFq'})
-            i=div.find('img',class_='s-image')
-            n=div.find('h2',attrs={'class':'a-size-base-plus a-spacing-none a-color-base a-text-normal'}).find('span')
-            l=div.find('a',class_='a-link-normal s-no-outline')
-            if(n==None):
-                b='Nill'
+                d['ProductLink']='https://amazon.in'+href
+                
+            if(rating==None):
+                d["Rating"]="NaN"
             else:
-                b=(n.text).split(' ')
-            if(n!=None and p!=None and b!=None and i!=None and l!=None):
-                d['Name']=n.text
-                d['Price']="₹"+p.text
-                d['Brand']=b[0]
-                d['Image']=i.get('src')
-                # ratings.append(rating.text)
-                d['ProductLink']='https://amazon.in/'+l.get('href')
-                if(rating==None):
-                    d["Rating"]="NaN"
-                else:
-                    nr=(rating.text).split(" ")
-                    d["Rating"]=nr[0]
-                d['FA']="Amazon"
-                d['ID']=div['data-asin']
-                Data.append(d)
+                nr=(rating.text).split(" ")
+                d["Rating"]=nr[0]
+            d['FA']="Amazon"
+            d['ID']=div.get('data-asin', '')
+            Data.append(d)
 
 def flipkartSearch(x,p,Data):
     url = "https://www.flipkart.com/search?q={0}&page={1}"
