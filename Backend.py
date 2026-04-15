@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 import bs4
 import json
+import cloudscraper
 import numpy
 import matplotlib
 import matplotlib.pyplot as plt
@@ -72,87 +73,50 @@ def amazonSearch(x,p,Data):
             Data.append(d)
 
 def flipkartSearch(x,p,Data):
-    url = "https://www.flipkart.com/search?q={0}&page={1}"
-    url = url.format(x,p)
-    page = requests.get(url, headers=Headers(os='win',browser='chrome',headers=True).generate())
-    html = page.content
-    page_soup = bs4.BeautifulSoup(html, "html.parser")
-    # print(page_soup)
+    url = f"https://www.flipkart.com/search?q={x}&page={p}"
+    scraper = cloudscraper.create_scraper()
+    page_soup = bs4.BeautifulSoup(scraper.get(url).text, "html.parser")
 
-    # Single grid
-    if(page_soup.find('div',class_='tUxRFH')):
-        flipkart=page_soup.findAll('div',class_='cPHDOP col-12-12')
-        # print(len(flipkart))
-        for div in flipkart:
-            d={}
-            n=div.find('div', attrs={'class':'KzDlHZ'})
-            # print(n,end="\n")
-            p=div.find('div', attrs={'class':'Nx9bqj _4b5DiR'})
-            # print(p,end="\n")
-            l=div.find('a',class_='CGtC98')
-            # print(l,end="\n")
-            i=div.find('img',class_='DByuf4')
-            # print(i,end="\n")
-            if(n!=None):
-                b=(n.text).split(' ')
-            rating=div.find('div',class_='XQDdHH')
-            if(n!=None):
-                d["Name"]=n.text
-                d["Price"]=p.text
-                d["Brand"]=b[0]
-                d["Image"]=i.get('src')
-                d["ProductLink"]="https://www.flipkart.com"+l.get('href')
-                if(rating==None):
-                    d["Rating"]="NaN"
-                else:
-                    d["Rating"]=rating.text
-                d["FA"]="Flipkart"
-                id=div.find('div')
-                d["ID"]=id.find('div')['data-id']
-                Data.append(d)
+    seen_ids = set()
+    for node in page_soup.find_all('div', attrs={'data-id': True}):
+        item_id = node.get('data-id')
+        if not item_id or item_id in seen_ids:
+            continue
+            
+        curr = node
+        while curr and curr.name != 'body':
+            if curr.find('img') and any('/p/' in a['href'] or 'pid=' in a['href'] for a in curr.find_all('a', href=True)) and any('₹' in s for s in curr.strings):
+                break
+            curr = curr.parent
 
-    #4 grid
-    else:
-        flipkart=page_soup.findAll('div',class_='cPHDOP col-12-12')
-        for div in flipkart:
-            d={}
-            n=div.find('a', attrs={'class':'WKTcLC'})
-            if(n==None):
-                n=div.find('a', attrs={'class':'wjcEIp'})
-            # print(n,end="\n")
-            p=div.find('div', attrs={'class':'Nx9bqj'})
-            l=div.find('a',class_='rPDeLR')
-            if(l==None):
-                l=div.find('a',class_='VJA3rP')
-            # print(l,end="\n")
-            i=div.find('img',class_='_53J4C-')
-            if(i==None):
-                i=div.find('img',class_='DByuf4')
-            # print(i,end="\n")
-            b=div.find('div',attrs={'class':'sy19yP'})
-            if(b==None and n!=None):
-                t=n.text.split(" ")
-                b=t[0]
-            # print(b,end="\n")
-            r=div.find('div',class_='XQDdHH')
-            # print(n,l,i,b,r,sep=" ")
-            if(n!=None):
-                d["Name"]=n.text
-                d["Price"]=p.text
-                if(b==None):
-                    d["Brand"]="Nan"
-                else:
-                    d["Brand"]=b
-                d["Image"]=i.get('src')
-                d["ProductLink"]="https://www.flipkart.com"+l.get('href')
-                if(r==None):
-                    d["Rating"]="NaN"
-                else:
-                    d["Rating"]=r.text
-                d["FA"]="Flipkart"
-                id=div.find('div')
-                d["ID"]=id.find('div')['data-id']
-                Data.append(d)  
+        if not curr or curr.name == 'body':
+            continue
+            
+        link_node = next((a for a in curr.find_all('a', href=True) if '/p/' in a['href'] or 'pid=' in a['href']), None)
+        img_node = curr.find('img')
+        
+        if not link_node or not img_node: 
+            continue
+
+        strings = [s.strip() for s in curr.strings if s.strip()]
+        name = img_node.get('alt', '').strip() or next((s for s in strings if len(s) > 15), "Nill")
+        price = next((s for s in strings if '₹' in s), None)
+        rating = next((s for s in strings if len(s) <= 3 and s.replace('.', '', 1).isdigit() and '.' in s), "NaN")
+        
+        if not price: 
+            continue
+
+        Data.append({
+            "Name": name,
+            "Price": price,
+            "Brand": name.split(' ')[0] if name != "Nill" else "NaN",
+            "Image": img_node.get('src', ''),
+            "ProductLink": "https://www.flipkart.com" + link_node['href'] if link_node['href'].startswith('/') else link_node['href'],
+            "Rating": rating,
+            "FA": "Flipkart",
+            "ID": item_id
+        })
+        seen_ids.add(item_id)
 
 
 def poorvika(x,p,Data):
